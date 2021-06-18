@@ -9,4 +9,16 @@ class ProductsController < ApplicationController
     product = Product.find_by(id: the_id)
     render json: product.as_json
   end
+
+  def create
+    name = params[:name]
+    price = params[:price]
+    description = params[:description]
+    created_product = Product.new(name: name, price: price, description: description)
+    save = params[:save]
+    if save == "yes"
+      created_product.save
+    end
+    render json: created_product.as_json
+  end
 end
