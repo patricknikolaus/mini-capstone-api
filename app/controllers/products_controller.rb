@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
 
   def show
     product = Product.find_by(id: params[:id])
-    render json: product.as_json(methods: [:is_discounted?, :tax, :total])
+    render json: product
   end
 
   def create
@@ -16,18 +16,24 @@ class ProductsController < ApplicationController
       image_url: params[:image_url],
       description: params[:description]
     )
-    product.save
-    render json: product.as_json
+    if product.save
+      render json: product
+    else
+      render json: {error: product.errors.full_messages}, status: :unprocessable_entity
+    end
   end
 
   def update
     product = Product.find_by(id: params[:id])
-    product.price = params[:price]
-    product.name = params[:name]
-    product.image_url = params[:image_url]
-    product.description = params[:description]
-    product.save
-    render json: product.as_json
+    product.price = params[:price] || product.price
+    product.name = params[:name] || product.name
+    product.image_url = params[:image_url] || product.image_url
+    product.description = params[:description] || product.description
+    if product.save
+      render json: product
+    else
+      render json: {error: product.errors.full_messages}, status: :unprocessable_entity
+    end
   end
 
   def destroy

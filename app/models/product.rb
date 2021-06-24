@@ -1,4 +1,13 @@
 class Product < ApplicationRecord
+  validates :name, presence: true
+  validates :name, uniqueness: true
+  validates :price, presence: true
+  validates :price, numericality: { greater_than: 0 }
+  validates :description, presence: true
+  validates :description, length: {in: 10..500}
+  # validates :inventory, numericality: { only_integer: true }
+  # validates :image_url, format: {with: /\.(png|jpg)\Z/i}
+
   def is_discounted?
     if price < 10
       true
