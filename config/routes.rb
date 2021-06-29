@@ -12,4 +12,8 @@ Rails.application.routes.draw do
   delete "/suppliers/:id", controller: "suppliers", action: "destroy"
 
   post "/images", controller: "images", action: "create"
+
+  post "/users", controller: "users", action: "create"
+
+  post "/sessions", controller: "sessions", action: "create"
 end

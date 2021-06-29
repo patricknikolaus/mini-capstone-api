@@ -1,12 +1,20 @@
 class ProductsController < ApplicationController
   def index
-    products = Product.all
-    render json: products
+    if current_user
+      products = Product.all
+      render json: {message: "Welcome #{current_user.username}!", products: products}
+    else
+      render json: {message: "Please login or signup to view."}
+    end
   end
 
   def show
-    product = Product.find_by(id: params[:id])
-    render json: product
+    if current_user
+      product = Product.find_by(id: params[:id])
+      render json: {message: "Welcome #{current_user.username}!", product: product}
+    else
+      render json: {message: "Please login or signup to view."}
+    end
   end
 
   def create
