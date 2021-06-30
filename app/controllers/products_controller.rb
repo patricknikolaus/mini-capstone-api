@@ -1,20 +1,14 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_admin, only: [:create, :update, :destroy]
+
   def index
-    if current_user
       products = Product.all
-      render json: {message: "Welcome #{current_user.username}!", products: products}
-    else
-      render json: {message: "Please login or signup to view."}
-    end
+      render json: products
   end
 
   def show
-    if current_user
       product = Product.find_by(id: params[:id])
-      render json: {message: "Welcome #{current_user.username}!", product: product}
-    else
-      render json: {message: "Please login or signup to view."}
-    end
+      render json: product
   end
 
   def create

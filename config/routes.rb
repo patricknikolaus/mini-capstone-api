@@ -16,4 +16,8 @@ Rails.application.routes.draw do
   post "/users", controller: "users", action: "create"
 
   post "/sessions", controller: "sessions", action: "create"
+
+  post "/orders", controller: "orders", action: "create"
+  get "/orders/:id", controller: "orders", action: "show"
+  get "/orders", controller: "orders", action: "index"
 end
